@@ -1,12 +1,20 @@
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ElectricityPriceCompareTDD
 {
     public class Tests
     {
+        private readonly ITestOutputHelper output;
+
+        public Tests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
         [Fact]
         public void ComparePrices_ShouldReturnCorrectDifferences()
         {
@@ -52,6 +60,20 @@ namespace ElectricityPriceCompareTDD
             Assert.Equal(new DateTime(2022, 11, 14, 21, 0, 0), differences[2].EndDate);
             Assert.Equal(11.477m, differences[2].PriceDifferenceValue, 3);
             Assert.Equal(ElectricityContractType.MarketPrice, differences[2].CheaperContract);
+
+            LogResults(differences);
+        }
+
+        private void LogResults(List<PriceDifference> differences)
+        {
+            output.WriteLine("Price Differences:");
+
+            foreach (var difference in differences)
+            {
+                output.WriteLine($"Start Date: {difference.StartDate}, End Date: {difference.EndDate}");
+                output.WriteLine($"Price Difference Value: {difference.PriceDifferenceValue}");
+                output.WriteLine($"Cheaper Contract: {difference.CheaperContract}");
+            }
         }
     }
 }
