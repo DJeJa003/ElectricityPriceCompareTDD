@@ -43,7 +43,7 @@ namespace ElectricityPriceCompareTDD
             decimal fixedPrice = 12.0M;
 
             List<PriceDifference> differences = comparer.ComparePrices(exchangePrices, fixedPrice);
-
+            //
             Assert.Equal(3, differences.Count);
 
             Assert.Equal(new DateTime(2022, 11, 14, 22, 0, 0), differences[0].StartDate);
